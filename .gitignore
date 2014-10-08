@@ -1,0 +1,5 @@
+*.sc
+*.swp
+.metadata/
+scala99Solutions/*
+!scala99Solutions/src
