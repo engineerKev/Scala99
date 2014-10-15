@@ -59,4 +59,17 @@ object oneStars {
         palindrome(others.dropRight(1))
       }
   }
+
+  def duplicate[_](mainList: List[_]): List[_] = {
+    if (mainList.isEmpty) Nil
+    else List.fill(2)(mainList.head) ::: duplicate(mainList.tail)
+  }
+
+  def split[_](i: Int, original: List[_]): List[_] = {
+    def subLists[_](index: Int, source: List[_], target: List[_]): List[_] = index match {
+      case 0 => List(target, source)
+      case _ => subLists(index - 1, source.tail, target :+ source.head)
+    }
+    subLists(i, original, List())
+  } 
 }
