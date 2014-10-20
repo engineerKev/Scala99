@@ -71,5 +71,13 @@ object oneStars {
       case _ => subLists(index - 1, source.tail, target :+ source.head)
     }
     subLists(i, original, List())
-  } 
+  }
+
+  def insertAt[_](newElem: Any, position: Int, list: List[_]): List[_] = {
+    def addAt[_](where: Int, source: List[_], target: List[_]): List[_] = where match {
+      case 0 => (target :+ newElem) ::: source
+      case _ => addAt(where - 1, source.tail, target :+ source.head)
+    }
+    addAt(position, list, List())
+  }
 }

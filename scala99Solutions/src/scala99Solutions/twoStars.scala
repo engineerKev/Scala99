@@ -86,4 +86,33 @@ object twoStars {
     }
     splitEmUp(i, mainList, List())
   }
+  
+  def split[_](start: Int, end: Int, original: List[_]): List[_] = {
+    def getSlice[_](i: Int, j: Int, source: List[_], target: List[_]): List[_] = (i, j, source) match {
+      case (0, 0, _) => target
+      case (0, _, current :: rest) => getSlice(i, j - 1, rest, target :+ current)
+      case (_, _, _) => getSlice(i - 1, j - 1, source.tail, target)
+    }
+    if (start < end) getSlice(start, end, original, List()) else original
+  }
+
+  def rotate[_](indexes: Int, original: List[_]): List[_] = {
+    if (indexes > 0) {
+      val (head, leftover) = original.splitAt(3)
+      leftover ::: head
+    } else {
+      val (head, leftover) = original.reverse.splitAt(0 - indexes)
+      head ::: leftover.reverse
+    }
+  }
+
+  def removeAt[_](index: Int, original: List[_]): Tuple2[List[_], _] = {
+    def makeTuple[_](i: Int, source: List[_], target: List[_]): Tuple2[List[_], _] = (i, source) match {
+      case (0, _) =>
+        (target ::: source.tail, source.head)
+      case (_, current :: others) =>
+        makeTuple(i - 1, source.tail, target :+ source.head)
+    }
+    makeTuple(index, original, List())
+  }
 }
